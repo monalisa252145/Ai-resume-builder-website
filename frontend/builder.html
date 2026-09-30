@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder - ResumeAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/builder.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <a href="dashboard.html" class="animated-logo-box">
+                    <span class="logo-text">ResumeAI</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html"><span class="icon">🏠</span> Dashboard</a>
+                <a href="builder.html" class="active"><span class="icon">✏️</span> Resume Builder</a>
+                <a href="templates.html"><span class="icon">🎨</span> Templates</a>
+                <a href="analyzer.html"><span class="icon">📊</span> ATS Analyzer</a>
+                <a href="profile.html"><span class="icon">👤</span> Profile</a>
+                <a href="help.html"><span class="icon">❓</span> Help</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn btn-danger btn-sm" style="width:100%;" onclick="logout()">🚪 Logout</button>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header class="topbar">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <span class="topbar-title">Resume Builder & Studio</span>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <button class="studio-action-btn" id="undoBtn" onclick="undoCustomization()" title="Undo (Ctrl+Z)"
+                        disabled>↩️ Undo</button>
+                    <button class="studio-action-btn" id="redoBtn" onclick="redoCustomization()" title="Redo (Ctrl+Y)"
+                        disabled>↪️ Redo</button>
+                    <span class="save-status" id="saveStatus">💾 Ready</span>
+                    <button class="btn btn-primary btn-sm" onclick="saveResume()">💾 Save</button>
+                </div>
+            </header>
+
+            <div class="builder-layout">
+                <!-- LEFT PANEL: Form & Customization Studio -->
+                <div class="builder-form-panel" id="formPanel">
+                    <div id="draftAlert"></div>
+
+                    <!-- Resume Title & Template Selection -->
+                    <div class="section-card">
+                        <div class="form-group">
+                            <label>Resume Title</label>
+                            <input type="text" id="resumeTitle" placeholder="Enter resume title"
+                                oninput="scheduleAutoSave()">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Template (10 Professional Designs)</label>
+                            <div class="template-tabs">
+                                <button class="template-tab active"
+                                    onclick="selectTemplate('classic', this)">Classic</button>
+                                <button class="template-tab" onclick="selectTemplate('modern', this)">Modern</button>
+                                <button class="template-tab"
+                                    onclick="selectTemplate('corporate', this)">Corporate</button>
+                                <button class="template-tab" onclick="selectTemplate('elegant', this)">Elegant</button>
+                                <button class="template-tab" onclick="selectTemplate('tech', this)">Tech Dev</button>
+                                <button class="template-tab"
+                                    onclick="selectTemplate('creative', this)">Creative</button>
+                                <button class="template-tab"
+                                    onclick="selectTemplate('executive', this)">Executive</button>
+                                <button class="template-tab" onclick="selectTemplate('student', this)">Student</button>
+                                <button class="template-tab" onclick="selectTemplate('ats', this)">ATS Simple</button>
+                                <button class="template-tab" onclick="selectTemplate('twocol', this)">Two
+                                    Column</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COMPLETE CUSTOMIZE / EDIT RESUME STUDIO -->
+                    <div class="section-card customize-studio-card">
+                        <div class="section-header" onclick="toggleSection('customizeStudioSection')">
+                            <h3>🎨 Customize Resume Studio</h3>
+                            <span id="customizeStudioSection-toggle">▼</span>
+                        </div>
+                        <div class="section-content" id="customizeStudioSection">
+                            <!-- Quick Action Toolbar -->
+                            <div class="studio-top-actions">
+                                <button class="studio-action-btn" onclick="resetDesignSettings()"
+                                    title="Reset design styles only without touching resume content">🔄 Reset
+                                    Design</button>
+                                <button class="studio-action-btn" onclick="toggleAtsMode()" id="quickAtsToggleBtn">🎯
+                                    ATS Mode: <span id="atsModeLabel">OFF</span></button>
+                            </div>
+
+                            <!-- Tabs Navigation -->
+                            <div class="studio-tabs-nav">
+                                <button class="studio-tab-btn active" onclick="switchStudioTab('colorsTab', this)">🎨
+                                    Colors</button>
+                                <button class="studio-tab-btn" onclick="switchStudioTab('typographyTab', this)">🔤
+                                    Typography</button>
+                                <button class="studio-tab-btn" onclick="switchStudioTab('formattingTab', this)">✏️
+                                    Formatting</button>
+                                <button class="studio-tab-btn" onclick="switchStudioTab('layoutTab', this)">📐 Layout &
+                                    Spacing</button>
+                                <button class="studio-tab-btn" onclick="switchStudioTab('sectionsTab', this)">↕️ Section
+                                    Order</button>
+                                <button class="studio-tab-btn" onclick="switchStudioTab('visibilityTab', this)">👁️
+                                    Visibility</button>
+                                <button class="studio-tab-btn" onclick="switchStudioTab('advancedTab', this)">⚙️
+                                    Advanced</button>
+                            </div>
+
+                            <!-- TAB 1: COLORS -->
+                            <div class="studio-tab-pane active" id="colorsTab">
+                                <label
+                                    style="font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 8px; display: block;">Curated
+                                    Preset Palettes</label>
+                                <div class="palette-presets-grid">
+                                    <div class="palette-preset-chip active" onclick="applyPresetPalette('blue', this)">
+                                        <div class="palette-chip-swatches">
+                                            <div class="palette-chip-swatch" style="background:#1976d2;"></div>
+                                            <div class="palette-chip-swatch" style="background:#0f172a;"></div>
+                                        </div>
+                                        <span>Pro Blue</span>
+                                    </div>
+                                    <div class="palette-preset-chip" onclick="applyPresetPalette('slate', this)">
+                                        <div class="palette-chip-swatches">
+                                            <div class="palette-chip-swatch" style="background:#334155;"></div>
+                                            <div class="palette-chip-swatch" style="background:#1e293b;"></div>
+                                        </div>
+                                        <span>Executive Slate</span>
+                                    </div>
+                                    <div class="palette-preset-chip" onclick="applyPresetPalette('navy', this)">
+                                        <div class="palette-chip-swatches">
+                                            <div class="palette-chip-swatch" style="background:#0f172a;"></div>
+                                            <div class="palette-chip-swatch" style="background:#1e293b;"></div>
+                                        </div>
+                                        <span>Midnight Navy</span>
+                                    </div>
+                                    <div class="palette-preset-chip" onclick="applyPresetPalette('emerald', this)">
+                                        <div class="palette-chip-swatches">
+                                            <div class="palette-chip-swatch" style="background:#059669;"></div>
+                                            <div class="palette-chip-swatch" style="background:#064e3b;"></div>
+                                        </div>
+                                        <span>Emerald Tech</span>
+                                    </div>
+                                    <div class="palette-preset-chip" onclick="applyPresetPalette('burgundy', this)">
+                                        <div class="palette-chip-swatches">
+                                            <div class="palette-chip-swatch" style="background:#881337;"></div>
+                                            <div class="palette-chip-swatch" style="background:#4c0519;"></div>
+                                        </div>
+                                        <span>Burgundy Wine</span>
+                                    </div>
+                                    <div class="palette-preset-chip" onclick="applyPresetPalette('amber', this)">
+                                        <div class="palette-chip-swatches">
+                                            <div class="palette-chip-swatch" style="background:#d97706;"></div>
+                                            <div class="palette-chip-swatch" style="background:#451a03;"></div>
+                                        </div>
+                                        <span>Warm Amber</span>
+                                    </div>
+                                    <div class="palette-preset-chip" onclick="applyPresetPalette('purple', this)">
+                                        <div class="palette-chip-swatches">
+                                            <div class="palette-chip-swatch" style="background:#7c3aed;"></div>
+                                            <div class="palette-chip-swatch" style="background:#3b0764;"></div>
+                                        </div>
+                                        <span>Royal Purple</span>
+                                    </div>
+                                    <div class="palette-preset-chip" onclick="applyPresetPalette('minimal', this)">
+                                        <div class="palette-chip-swatches">
+                                            <div class="palette-chip-swatch" style="background:#111827;"></div>
+                                            <div class="palette-chip-swatch" style="background:#374151;"></div>
+                                        </div>
+                                        <span>Monochrome</span>
+                                    </div>
+                                </div>
+
+                                <div class="color-picker-group">
+                                    <div class="color-picker-row">
+                                        <label>Primary Accent Color</label>
+                                        <div class="color-input-combo">
+                                            <input type="color" id="primaryColorPicker" value="#1976d2"
+                                                onchange="setPrimaryColor(this.value)">
+                                            <input type="text" id="primaryColorHex" value="#1976D2"
+                                                onchange="setPrimaryColor(this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="color-picker-row">
+                                        <label>Heading Text Color</label>
+                                        <div class="color-input-combo">
+                                            <input type="color" id="headingColorPicker" value="#0f172a"
+                                                onchange="setHeadingColor(this.value)">
+                                            <input type="text" id="headingColorHex" value="#0F172A"
+                                                onchange="setHeadingColor(this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="color-picker-row">
+                                        <label>Body Text Color</label>
+                                        <div class="color-input-combo">
+                                            <input type="color" id="bodyColorPicker" value="#334155"
+                                                onchange="setBodyColor(this.value)">
+                                            <input type="text" id="bodyColorHex" value="#334155"
+                                                onchange="setBodyColor(this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="color-picker-row">
+                                        <label>Divider / Border Color</label>
+                                        <div class="color-input-combo">
+                                            <input type="color" id="borderColorPicker" value="#e2e8f0"
+                                                onchange="setBorderColor(this.value)">
+                                            <input type="text" id="borderColorHex" value="#E2E8F0"
+                                                onchange="setBorderColor(this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="color-picker-row">
+                                        <label>Page Background Color</label>
+                                        <div class="color-input-combo">
+                                            <input type="color" id="bgColorPicker" value="#ffffff"
+                                                onchange="setBackgroundColor(this.value)">
+                                            <input type="text" id="bgColorHex" value="#FFFFFF"
+                                                onchange="setBackgroundColor(this.value)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 2: TYPOGRAPHY -->
+                            <div class="studio-tab-pane" id="typographyTab">
+                                <div class="form-group">
+                                    <label>Font Family</label>
+                                    <select id="fontFamilySelect" onchange="setFontFamily(this.value)">
+                                        <option value="'Inter', sans-serif">Inter (Modern & Clean)</option>
+                                        <option value="'Roboto', sans-serif">Roboto (Tech & Standard)</option>
+                                        <option value="'Poppins', sans-serif">Poppins (Contemporary Geometric)</option>
+                                        <option value="'Open Sans', sans-serif">Open Sans (High Legibility)</option>
+                                        <option value="'Lato', sans-serif">Lato (Warm & Professional)</option>
+                                        <option value="Georgia, serif">Georgia (Classic Editorial Serif)</option>
+                                        <option value="'Times New Roman', serif">Times New Roman (Traditional Academic)
+                                        </option>
+                                        <option value="'Courier New', monospace">Courier New (Developer Monospace)
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="slider-control-group">
+                                    <div class="slider-control-header">
+                                        <label>Candidate Name Size</label>
+                                        <span class="slider-val" id="nameFontSizeVal">24px</span>
+                                    </div>
+                                    <input type="range" class="studio-slider" id="nameFontSizeSlider" min="18" max="36"
+                                        value="24" oninput="setNameFontSize(this.value)">
+                                </div>
+
+                                <div class="slider-control-group">
+                                    <div class="slider-control-header">
+                                        <label>Section Headings Size</label>
+                                        <span class="slider-val" id="headingFontSizeVal">13px</span>
+                                    </div>
+                                    <input type="range" class="studio-slider" id="headingFontSizeSlider" min="11"
+                                        max="18" value="13" oninput="setHeadingFontSize(this.value)">
+                                </div>
+
+                                <div class="slider-control-group">
+                                    <div class="slider-control-header">
+                                        <label>Body Text Size</label>
+                                        <span class="slider-val" id="bodyFontSizeVal">11px</span>
+                                    </div>
+                                    <input type="range" class="studio-slider" id="bodyFontSizeSlider" min="9" max="14"
+                                        value="11" oninput="setBodyFontSize(this.value)">
+                                </div>
+
+                                <div class="slider-control-group">
+                                    <div class="slider-control-header">
+                                        <label>Letter Spacing</label>
+                                        <span class="slider-val" id="letterSpacingVal">0px</span>
+                                    </div>
+                                    <input type="range" class="studio-slider" id="letterSpacingSlider" min="-1" max="4"
+                                        step="0.5" value="0" oninput="setLetterSpacing(this.value)">
+                                </div>
+
+                                <div class="two-col-row" style="margin-top: 12px;">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label>Heading Weight</label>
+                                        <select id="fontWeightSelect" onchange="setFontWeight(this.value)">
+                                            <option value="600">Semi-Bold (600)</option>
+                                            <option value="700" selected>Bold (700)</option>
+                                            <option value="800">Extra-Bold (800)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label>Line Spacing</label>
+                                        <select id="lineHeightSelect" onchange="setLineHeight(this.value)">
+                                            <option value="1.2">Compact (1.2)</option>
+                                            <option value="1.4" selected>Normal (1.4)</option>
+                                            <option value="1.6">Relaxed (1.6)</option>
+                                            <option value="1.8">Spacious (1.8)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 3: FORMATTING -->
+                            <div class="studio-tab-pane" id="formattingTab">
+                                <div class="form-group">
+                                    <label>Text Alignment</label>
+                                    <div class="btn-group-row">
+                                        <button type="button" class="format-btn active" id="alignLeftBtn"
+                                            onclick="setTextAlign('left', this)">⇤ Left</button>
+                                        <button type="button" class="format-btn" id="alignCenterBtn"
+                                            onclick="setTextAlign('center', this)">↔ Center</button>
+                                        <button type="button" class="format-btn" id="alignRightBtn"
+                                            onclick="setTextAlign('right', this)">⇥ Right</button>
+                                        <button type="button" class="format-btn" id="alignJustifyBtn"
+                                            onclick="setTextAlign('justify', this)">☰ Justify</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Text Emphasis</label>
+                                    <div class="formatting-tools-bar">
+                                        <button type="button" class="format-toggle-btn" id="boldToggleBtn"
+                                            onclick="toggleBold()">
+                                            <strong>B</strong> Bold
+                                        </button>
+                                        <button type="button" class="format-toggle-btn" id="underlineToggleBtn"
+                                            onclick="toggleUnderline()">
+                                            <u>U</u> Underline Headings
+                                        </button>
+                                        <button type="button" class="format-toggle-btn" id="italicToggleBtn"
+                                            onclick="toggleItalic()">
+                                            <em>I</em> Italic
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label>Section Heading Capitalization</label>
+                                    <select id="textTransformSelect" onchange="setTextTransform(this.value)">
+                                        <option value="uppercase">UPPERCASE (e.g. WORK EXPERIENCE)</option>
+                                        <option value="capitalize">Capitalize Words (e.g. Work Experience)</option>
+                                        <option value="none">As Typed (Standard Case)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- TAB 4: LAYOUT & SPACING -->
+                            <div class="studio-tab-pane" id="layoutTab">
+                                <div class="two-col-row" style="margin-bottom: 12px;">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label>Page Margins</label>
+                                        <select id="marginSelect" onchange="setPageMargins(this.value)">
+                                            <option value="12mm">Compact (12mm)</option>
+                                            <option value="20mm" selected>Standard (20mm)</option>
+                                            <option value="28mm">Spacious (28mm)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label>Section Spacing</label>
+                                        <select id="sectionSpacingSelect" onchange="setSectionSpacing(this.value)">
+                                            <option value="8px">Compact (8px)</option>
+                                            <option value="14px" selected>Standard (14px)</option>
+                                            <option value="22px">Spacious (22px)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="two-col-row">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label>Divider Line Style</label>
+                                        <select id="dividerStyleSelect" onchange="setDividerStyle(this.value)">
+                                            <option value="solid" selected>Solid Line</option>
+                                            <option value="dashed">Dashed Line</option>
+                                            <option value="dotted">Dotted Line</option>
+                                            <option value="double">Double Line</option>
+                                            <option value="none">No Divider</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label>Card / Header Corners</label>
+                                        <select id="borderRadiusSelect" onchange="setBorderRadius(this.value)">
+                                            <option value="0px">Sharp Corners (0px)</option>
+                                            <option value="4px" selected>Subtle Rounded (4px)</option>
+                                            <option value="8px">Modern Rounded (8px)</option>
+                                            <option value="16px">Smooth Pill (16px)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 5: SECTION REORDERING (Drag & Drop + Buttons) -->
+                            <div class="studio-tab-pane" id="sectionsTab">
+                                <p style="font-size: 12px; color: #64748b; margin-bottom: 10px;">
+                                    ↕️ Drag items or click ▲/▼ to change the display order of resume sections in live
+                                    preview:
+                                </p>
+                                <div class="section-reorder-list" id="sectionReorderContainer">
+                                    <!-- Dynamic reorder list injected by JS -->
+                                </div>
+                            </div>
+
+                            <!-- TAB 6: SECTION VISIBILITY (Show/Hide) -->
+                            <div class="studio-tab-pane" id="visibilityTab">
+                                <p style="font-size: 12px; color: #64748b; margin-bottom: 12px;">
+                                    👁️ Toggle visibility to show or hide sections without losing your entered data:
+                                </p>
+                                <div class="visibility-switches-grid" id="visibilitySwitchesContainer">
+                                    <!-- Dynamic visibility switches injected by JS -->
+                                </div>
+                            </div>
+
+                            <!-- TAB 7: ADVANCED -->
+                            <div class="studio-tab-pane" id="advancedTab">
+                                <div class="ats-mode-card">
+                                    <div class="ats-mode-text">
+                                        <h4>🎯 ATS Friendly Formatting</h4>
+                                        <p>Enforces clean single-column structure, high contrast, and standard ATS
+                                            headings.</p>
+                                    </div>
+                                    <label class="switch-toggle">
+                                        <input type="checkbox" id="atsModeCheckbox"
+                                            onchange="toggleAtsMode(this.checked)">
+                                        <span class="switch-slider"></span>
+                                    </label>
+                                </div>
+
+                                <div class="two-col-row">
+                                    <button class="btn btn-secondary btn-sm" onclick="resetDesignSettings()">🔄 Reset
+                                        All Design Settings</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="resetAllFormData()">🧹 Clear All
+                                        Resume Data</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RESUME CONTENT SECTIONS (Starting completely empty with proper placeholders) -->
+                    <!-- 1. Personal Information -->
+                    <div class="section-card">
+                        <div class="section-header" onclick="toggleSection('personalSection')">
+                            <h3>👤 Personal Information</h3>
+                            <span id="personalSection-toggle">▼</span>
+                        </div>
+                        <div class="section-content" id="personalSection">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="fullName" placeholder="e.g. Alex Johnson"
+                                        oninput="updatePreview(); scheduleAutoSave();">
+                                </div>
+                                <div class="form-group">
+                                    <label>Job Title / Headline</label>
+                                    <input type="text" id="professionalTitle"
+                                        placeholder="e.g. Senior Full Stack Engineer"
+                                        oninput="updatePreview(); scheduleAutoSave();">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="email" placeholder="e.g. alex.johnson@example.com"
+                                        oninput="updatePreview(); scheduleAutoSave();">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="tel" id="phone" placeholder="e.g. +1 (555) 234-5678"
+                                        oninput="updatePreview(); scheduleAutoSave();">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Location / City, Country</label>
+                                    <input type="text" id="location" placeholder="e.g. San Francisco, CA"
+                                        oninput="updatePreview(); scheduleAutoSave();">
+                                </div>
+                                <div class="form-group">
+                                    <label>LinkedIn Profile URL</label>
+                                    <input type="url" id="linkedin" placeholder="e.g. linkedin.com/in/alexjohnson"
+                                        oninput="updatePreview(); scheduleAutoSave();">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Portfolio / Website</label>
+                                    <input type="url" id="portfolio" placeholder="e.g. alexjohnson.dev"
+                                        oninput="updatePreview(); scheduleAutoSave();">
+                                </div>
+                                <div class="form-group">
+                                    <label>GitHub Profile URL</label>
+                                    <input type="url" id="github" placeholder="e.g. github.com/alexjohnson"
+                                        oninput="updatePreview(); scheduleAutoSave();">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Professional Summary -->
+                    <div class="section-card">
+                        <div class="section-header" onclick="toggleSection('summarySection')">
+                            <h3>📝 Professional Summary</h3>
+                            <span id="summarySection-toggle">▼</span>
+                        </div>
+                        <div class="section-content" id="summarySection">
+                            <div class="form-group">
+                                <textarea id="summary" rows="4" placeholder="Write a short professional summary..."
+                                    oninput="updatePreview(); scheduleAutoSave();"></textarea>
+                            </div>
+                            <button class="ai-btn" onclick="generateSummary()" id="summaryAiBtn">
+                                🤖 Generate with AI
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3. Work Experience -->
+                    <div class="section-card">
+                        <div class="section-header" onclick="toggleSection('expSection')">
+                            <h3>💼 Work Experience</h3>
+                            <span id="expSection-toggle">▼</span>
+                        </div>
+                        <div class="section-content" id="expSection">
+                            <div id="experienceList"></div>
+                            <button class="btn btn-secondary btn-sm" onclick="addExperience()">+ Add Experience</button>
+                        </div>
+                    </div>
+
+                    <!-- 4. Education -->
+                    <div class="section-card">
+                        <div class="section-header" onclick="toggleSection('eduSection')">
+                            <h3>🎓 Education</h3>
+                            <span id="eduSection-toggle">▼</span>
+                        </div>
+                        <div class="section-content" id="eduSection">
+                            <div id="educationList"></div>
+                            <button class="btn btn-secondary btn-sm" onclick="addEducation()">+ Add Education</button>
+                        </div>
+                    </div>
+
+                    <!-- 5. Skills -->
+                    <div class="section-card">
+                        <div class="section-header" onclick="toggleSection('skillsSection')">
+                            <h3>⚡ Skills</h3>
+                            <span id="skillsSection-toggle">▼</span>
+                        </div>
+                        <div class="section-content" id="skillsSection">
+                            <div class="skills-container" id="skillsContainer"></div>
+                            <div class="skill-input-row">
+                                <input type="text" id="skillInput" placeholder="e.g. Java"
+                                    onkeydown="addSkillOnEnter(event)">
+                                <button class="btn btn-primary btn-sm" onclick="addSkill()">Add</button>
+                            </div>
+                            <br>
+                            <button class="ai-btn" onclick="suggestSkills()" id="skillsAiBtn">🤖 Suggest Skills</button>
+                        </div>
+                    </div>
+
+                    <!-- 6. Projects -->
+                    <div class="section-card">
+                        <div class="section-header" onclick="toggleSection('projectsSection')">
+                            <h3>🚀 Projects</h3>
+                            <span id="projectsSection-toggle">▼</span>
+                        </div>
+                        <div class="section-content" id="projectsSection">
+                            <div id="projectsList"></div>
+                            <button class="btn btn-secondary btn-sm" onclick="addProject()">+ Add Project</button>
+                        </div>
+                    </div>
+
+                    <!-- 7. Certifications -->
+                    <div class="section-card">
+                        <div class="section-header" onclick="toggleSection('certSection')">
+                            <h3>🏆 Certifications</h3>
+                            <span id="certSection-toggle">▼</span>
+                        </div>
+                        <div class="section-content" id="certSection">
+                            <div id="certificationsList"></div>
+                            <button class="btn btn-secondary btn-sm" onclick="addCertification()">+ Add
+                                Certification</button>
+                        </div>
+                    </div>
+
+                    <!-- 8. Achievements, Languages, Hobbies -->
+                    <div class="section-card">
+                        <div class="section-header" onclick="toggleSection('extraSection')">
+                            <h3>📋 Other Sections</h3>
+                            <span id="extraSection-toggle">▼</span>
+                        </div>
+                        <div class="section-content" id="extraSection">
+                            <div class="form-group">
+                                <label>Achievements (one per line)</label>
+                                <textarea id="achievements" rows="3"
+                                    placeholder="e.g. Won 1st place in National Hackathon 2023..."
+                                    oninput="updatePreview(); scheduleAutoSave();"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Languages (comma separated)</label>
+                                <input type="text" id="languages" placeholder="e.g. English, Hindi, Spanish"
+                                    oninput="updatePreview(); scheduleAutoSave();">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Hobbies (comma separated)</label>
+                                <input type="text" id="hobbies" placeholder="e.g. Open Source, Photography, Chess"
+                                    oninput="updatePreview(); scheduleAutoSave();">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT PANEL: Live Resume Preview -->
+                <div class="builder-preview-panel" id="previewPanel">
+                    <div class="preview-controls">
+                        <button class="btn btn-primary btn-sm" onclick="downloadPdf()">📥 Download PDF</button>
+                        <button class="btn btn-secondary btn-sm" onclick="window.print()">🖨️ Print</button>
+                        <button class="btn btn-sm" style="background:#10b981; color:white;" onclick="analyzeResume()">📊
+                            Analyze ATS</button>
+                    </div>
+                    <div class="preview-scroll-area" id="previewScrollArea">
+                        <div class="preview-scale-wrapper" id="previewScaleWrapper">
+                            <div class="preview-paper" id="resumePreview">
+                                <!-- Rendered by templates.js with live dynamic placeholders -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/builder.js"></script>
+    <script>
+        /* Auto-scale the A4 preview to fit the right panel */
+        function recalcPreviewScale() {
+            const wrapper = document.getElementById('previewScaleWrapper');
+            const scrollArea = document.getElementById('previewScrollArea');
+            if (!wrapper || !scrollArea) return;
+
+            const A4_PX = 210 * (96 / 25.4); // 210mm at 96dpi ≈ 794px
+            const availableWidth = scrollArea.clientWidth - 24; // 12px padding * 2
+            if (availableWidth <= 0) return;
+
+            const scale = Math.min(1, availableWidth / A4_PX);
+            wrapper.style.transformOrigin = 'top center';
+            wrapper.style.transform = `scale(${scale})`;
+
+            // Collapse the empty space left by the scale transform
+            const A4_H_PX = 297 * (96 / 25.4); // ~1123px
+            const collapsedGap = A4_H_PX * (1 - scale);
+            wrapper.style.marginBottom = `-${collapsedGap}px`;
+        }
+
+        // Run on resize
+        window.addEventListener('resize', recalcPreviewScale);
+
+        // Hook updatePreview after builder.js defines it
+        document.addEventListener('DOMContentLoaded', function () {
+            // Short delay to ensure builder.js has initialised
+            setTimeout(function () {
+                const origUpdate = window.updatePreview;
+                if (typeof origUpdate === 'function') {
+                    window.updatePreview = function () {
+                        origUpdate.apply(this, arguments);
+                        setTimeout(recalcPreviewScale, 30);
+                    };
+                }
+
+                // MutationObserver fallback — re-scale whenever resumePreview changes
+                const previewEl = document.getElementById('resumePreview');
+                if (previewEl) {
+                    new MutationObserver(function () {
+                        setTimeout(recalcPreviewScale, 30);
+                    }).observe(previewEl, { childList: true, subtree: true });
+                }
+
+                recalcPreviewScale();
+            }, 200);
+        });
+
+        window.addEventListener('load', function () {
+            setTimeout(recalcPreviewScale, 100);
+        });
+    </script>
+</body>
+
+</html>

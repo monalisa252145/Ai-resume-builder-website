@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates - ResumeAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/templates.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+<body>
+    <!-- Background Animated Decorations -->
+    <div class="dashboard-bg-decorations">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+        <div class="grid-mesh-overlay"></div>
+    </div>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <a href="dashboard.html" class="animated-logo-box">
+                    <span class="logo-text">ResumeAI</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html"><span class="icon">🏠</span> Dashboard</a>
+                <a href="builder.html"><span class="icon">✏️</span> Resume Builder</a>
+                <a href="templates.html" class="active"><span class="icon">🎨</span> Templates</a>
+                <a href="analyzer.html"><span class="icon">📊</span> ATS Analyzer</a>
+                <a href="profile.html"><span class="icon">👤</span> Profile</a>
+                <a href="help.html"><span class="icon">❓</span> Help</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn btn-danger btn-sm" style="width:100%;" onclick="logout()">🚪 Logout</button>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header class="topbar">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <span class="topbar-title">Resume Templates</span>
+                <a href="builder.html" class="btn btn-primary btn-sm">+ Create Resume</a>
+            </header>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <h1>Choose Your Template</h1>
+                    <p>10 professional templates designed to impress recruiters</p>
+                </div>
+
+                <div class="templates-grid">
+                    <div class="template-card" onclick="useTemplate('classic')">
+                        <div class="template-thumbnail tmpl-classic">
+                            <div class="tmpl-header">
+                                <h4>Use For :</h4>
+                                <p>Software Developer</p>
+                            </div>
+                            <div class="tmpl-body">
+                                <div class="tmpl-section-title"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line short"></div>
+                                <div class="tmpl-section-title"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line short"></div>
+                                <div class="tmpl-line shorter"></div>
+                                <div class="tmpl-section-title"></div>
+                                <div class="tmpl-line short"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>1. Classic Professional</h3>
+                            <p>Timeless design trusted by recruiters worldwide</p>
+                            <div class="template-actions">
+                                <button class="btn btn-primary btn-sm"
+                                    onclick="event.stopPropagation(); useTemplate('classic')">Use Template</button>
+                                <span class="badge badge-primary">Most Popular</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="useTemplate('modern')">
+                        <div class="template-thumbnail tmpl-modern">
+                            <div class="tmpl-header">
+                                <h4>Use For :</h4>
+                                <p>Full Stack Developer</p>
+                            </div>
+                            <div class="tmpl-body" style="background: #f0f9ff;">
+                                <div class="tmpl-section-title" style="background: #2196F3;"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line short"></div>
+                                <div class="tmpl-section-title" style="background: #2196F3;"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line shorter"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>2. Modern Minimal</h3>
+                            <p>Clean and contemporary layout with blue accents</p>
+                            <div class="template-actions">
+                                <button class="btn btn-primary btn-sm"
+                                    onclick="event.stopPropagation(); useTemplate('modern')">Use Template</button>
+                                <span class="badge badge-success">Trending</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="useTemplate('corporate')">
+                        <div class="template-thumbnail tmpl-corporate">
+                            <div class="tmpl-header">
+                                <h4>Use For :</h4>
+                                <p>Business Analyst</p>
+                            </div>
+                            <div class="tmpl-body">
+                                <div class="tmpl-section-title" style="background: #1a237e;"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line short"></div>
+                                <div class="tmpl-section-title" style="background: #1a237e;"></div>
+                                <div class="tmpl-line"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>3. Corporate</h3>
+                            <p>Formal and structured layout for corporate roles</p>
+                            <div class="template-actions">
+                                <button class="btn btn-primary btn-sm"
+                                    onclick="event.stopPropagation(); useTemplate('corporate')">Use Template</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="useTemplate('elegant')">
+                        <div class="template-thumbnail tmpl-elegant">
+                            <div class="tmpl-header">
+                                <h4>Use For :</h4>
+                                <p>Product Manager</p>
+                            </div>
+                            <div class="tmpl-body" style="background: #faf5ff;">
+                                <div class="tmpl-section-title" style="background: #4a148c;"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line short"></div>
+                                <div class="tmpl-section-title" style="background: #4a148c;"></div>
+                                <div class="tmpl-line"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>4. Elegant</h3>
+                            <p>Refined purple theme for leadership positions</p>
+                            <div class="template-actions">
+                                <button class="btn btn-primary btn-sm"
+                                    onclick="event.stopPropagation(); useTemplate('elegant')">Use Template</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="useTemplate('tech')">
+                        <div class="template-thumbnail tmpl-tech">
+                            <div class="tmpl-header">
+                                <h4>Use For :</h4>
+                                <p>Backend Engineer</p>
+                            </div>
+                            <div class="tmpl-body" style="background: #f0fdf9; font-family: monospace;">
+                                <div class="tmpl-section-title" style="background: #00695c;"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line short"></div>
+                                <div class="tmpl-section-title" style="background: #00695c;"></div>
+                                <div class="tmpl-line"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>5. Tech Developer</h3>
+                            <p>Developer-focused layout with green tech theme</p>
+                            <div class="template-actions">
+                                <button class="btn btn-primary btn-sm"
+                                    onclick="event.stopPropagation(); useTemplate('tech')">Use Template</button>
+                                <span class="badge badge-success">Dev Friendly</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="useTemplate('creative')">
+                        <div class="template-thumbnail tmpl-creative">
+                            <div class="tmpl-header">
+                                <h4>Use For :</h4>
+                                <p>UI/UX Designer</p>
+                            </div>
+                            <div class="tmpl-body" style="background: #fff8f5;">
+                                <div class="tmpl-section-title" style="background: #e65100;"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line short"></div>
+                                <div class="tmpl-section-title" style="background: #e65100;"></div>
+                                <div class="tmpl-line"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>6. Creative</h3>
+                            <p>Bold orange gradient for creative professionals</p>
+                            <div class="template-actions">
+                                <button class="btn btn-primary btn-sm"
+                                    onclick="event.stopPropagation(); useTemplate('creative')">Use Template</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="useTemplate('executive')">
+                        <div class="template-thumbnail tmpl-executive">
+                            <div class="tmpl-header">
+                                <h4>Use For :</h4>
+                                <p>CTO / VP Engineering</p>
+                            </div>
+                            <div class="tmpl-body" style="background: #f9fafb;">
+                                <div class="tmpl-section-title" style="background: #212121;"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line short"></div>
+                                <div class="tmpl-section-title" style="background: #212121;"></div>
+                                <div class="tmpl-line"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>7. Executive</h3>
+                            <p>Prestigious dark theme for senior executives</p>
+                            <div class="template-actions">
+                                <button class="btn btn-primary btn-sm"
+                                    onclick="event.stopPropagation(); useTemplate('executive')">Use Template</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="useTemplate('student')">
+                        <div class="template-thumbnail tmpl-student">
+                            <div class="tmpl-header">
+                                <h4>Use For :</h4>
+                                <p>Computer Science Graduate</p>
+                            </div>
+                            <div class="tmpl-body" style="background: #eff6ff;">
+                                <div class="tmpl-section-title" style="background: #1565c0;"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line short"></div>
+                                <div class="tmpl-section-title" style="background: #1565c0;"></div>
+                                <div class="tmpl-line"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>8. Student / Freshers</h3>
+                            <p>Education-first layout for fresh graduates</p>
+                            <div class="template-actions">
+                                <button class="btn btn-primary btn-sm"
+                                    onclick="event.stopPropagation(); useTemplate('student')">Use Template</button>
+                                <span class="badge badge-warning">Fresher</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="useTemplate('ats')">
+                        <div class="template-thumbnail tmpl-ats">
+                            <div class="tmpl-header" style="background: #37474f;">
+                                <h4>Use For :</h4>
+                                <p>Software Developer</p>
+                            </div>
+                            <div class="tmpl-body">
+                                <div class="tmpl-section-title" style="background: #37474f;"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line short"></div>
+                                <div class="tmpl-section-title" style="background: #37474f;"></div>
+                                <div class="tmpl-line"></div>
+                                <div class="tmpl-line shorter"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>9. ATS Simple</h3>
+                            <p>Maximum ATS compatibility - plain and structured</p>
+                            <div class="template-actions">
+                                <button class="btn btn-primary btn-sm"
+                                    onclick="event.stopPropagation(); useTemplate('ats')">Use Template</button>
+                                <span class="badge badge-success">ATS Friendly</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="useTemplate('twocol')">
+                        <div class="template-thumbnail tmpl-twocol">
+                            <div class="tmpl-header" style="background: #6a1b9a;">
+                                <h4>Use For :</h4>
+                                <p>Data Scientist</p>
+                            </div>
+                            <div class="tmpl-body" style="display: flex; gap: 8px; padding: 8px;">
+                                <div style="width: 35%; background: #f3e5f5; padding: 6px; border-radius: 4px;">
+                                    <div class="tmpl-line shorter"></div>
+                                    <div class="tmpl-line shorter"></div>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div class="tmpl-section-title" style="background: #6a1b9a;"></div>
+                                    <div class="tmpl-line"></div>
+                                    <div class="tmpl-line short"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>10. Modern Two Column</h3>
+                            <p>Side panel layout maximizing content space</p>
+                            <div class="template-actions">
+                                <button class="btn btn-primary btn-sm"
+                                    onclick="event.stopPropagation(); useTemplate('twocol')">Use Template</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        checkAuth();
+        function useTemplate(templateName) {
+            localStorage.setItem('selectedTemplate', templateName);
+            window.location.href = 'builder.html?template=' + templateName;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ResumeAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body>
+    <div class="auth-page">
+        <!-- Background Decorations -->
+        <div class="auth-bg-decorations">
+            <div class="auth-orb auth-orb-1"></div>
+            <div class="auth-orb auth-orb-2"></div>
+            <div class="auth-grid"></div>
+        </div>
+
+        <div class="auth-card">
+            <div class="auth-logo">
+                <a href="index.html" class="animated-logo-box">
+                    <span class="logo-text">ResumeAI</span>
+                </a>
+                <p>Your AI-powered resume builder</p>
+            </div>
+            <h2 class="auth-title">Welcome back! 👋</h2>
+            <p class="auth-subtitle">Login to continue building your resume</p>
+
+            <div id="alertBox"></div>
+
+            <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="loginBtn">Login to ResumeAI</button>
+            </form>
+
+            <div class="auth-divider">or try demo</div>
+
+            <button class="btn btn-secondary" style="width:100%; justify-content: center;" onclick="fillDemo()">
+                🎯 Use Demo Account
+            </button>
+
+            <div class="auth-footer">
+                Don't have an account? <a href="register.html">Create one free</a>
+            </div>
+            <div class="auth-footer" style="margin-top: 8px;">
+                <a href="index.html">← Back to home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        if (localStorage.getItem('token')) {
+            window.location.href = 'dashboard.html';
+        }
+        function fillDemo() {
+            document.getElementById('email').value = 'arjunsingh9708916@gmail.com';
+            document.getElementById('password').value = 'Arjun@303109';
+        }
+        async function handleLogin(event) {
+            event.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            btn.textContent = 'Logging in...';
+            btn.disabled = true;
+
+            try {
+                const data = await API.post('/api/auth/login', { email, password });
+                if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify({ id: data.userId, name: data.name, email: data.email }));
+                    showAlert('Login successful! Redirecting...', 'success');
+                    setTimeout(() => window.location.href = 'dashboard.html', 800);
+                } else {
+                    showAlert(data.message || 'Login failed', 'error');
+                    btn.textContent = 'Login to ResumeAI';
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                showAlert('Unable to connect to server. Please try again.', 'error');
+                btn.textContent = 'Login to ResumeAI';
+                btn.disabled = false;
+            }
+        }
+        function showAlert(msg, type) {
+            document.getElementById('alertBox').innerHTML = `<div class="alert alert-${type === 'error' ? 'error' : 'success'}">${msg}</div>`;
+        }
+    </script>
+</body>
+
+</html>
