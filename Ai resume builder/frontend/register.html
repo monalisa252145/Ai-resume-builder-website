@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - ResumeAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="auth-page">
+        <!-- Background Decorations -->
+        <div class="auth-bg-decorations">
+            <div class="auth-orb auth-orb-1"></div>
+            <div class="auth-orb auth-orb-2"></div>
+            <div class="auth-grid"></div>
+        </div>
+
+        <div class="auth-card">
+            <div class="auth-logo">
+                <a href="index.html" class="animated-logo-box">
+                    <span class="logo-text">ResumeAI</span>
+                </a>
+                <p>Start building your career today</p>
+            </div>
+            <h2 class="auth-title">Create your account 🚀</h2>
+            <p class="auth-subtitle">It's free and takes less than a minute</p>
+
+            <div id="alertBox"></div>
+
+            <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Minimum 6 characters" required oninput="checkStrength(this.value)">
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Repeat your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="registerBtn">Create Account</button>
+            </form>
+
+            <div class="auth-footer">
+                Already have an account? <a href="login.html">Login here</a>
+            </div>
+            <div class="auth-footer" style="margin-top: 8px;">
+                <a href="index.html">← Back to home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        if (localStorage.getItem('token')) {
+            window.location.href = 'dashboard.html';
+        }
+        function checkStrength(password) {
+            const bar = document.getElementById('strengthBar');
+            if (password.length < 4) { bar.style.width = '25%'; bar.style.background = '#ef4444'; }
+            else if (password.length < 6) { bar.style.width = '50%'; bar.style.background = '#f59e0b'; }
+            else if (password.length < 10) { bar.style.width = '75%'; bar.style.background = '#10b981'; }
+            else { bar.style.width = '100%'; bar.style.background = '#059669'; }
+        }
+        async function handleRegister(event) {
+            event.preventDefault();
+            const btn = document.getElementById('registerBtn');
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match', 'error');
+                return;
+            }
+            if (password.length < 6) {
+                showAlert('Password must be at least 6 characters', 'error');
+                return;
+            }
+
+            btn.textContent = 'Creating account...';
+            btn.disabled = true;
+
+            try {
+                const data = await API.post('/api/auth/register', { name, email, password });
+                if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify({ id: data.userId, name: data.name, email: data.email }));
+                    showAlert('Account created! Redirecting to dashboard...', 'success');
+                    setTimeout(() => window.location.href = 'dashboard.html', 800);
+                } else {
+                    showAlert(data.message || 'Registration failed', 'error');
+                    btn.textContent = 'Create Account';
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                showAlert('Unable to connect to server. Please try again.', 'error');
+                btn.textContent = 'Create Account';
+                btn.disabled = false;
+            }
+        }
+        function showAlert(msg, type) {
+            document.getElementById('alertBox').innerHTML = `<div class="alert alert-${type === 'error' ? 'error' : 'success'}">${msg}</div>`;
+        }
+    </script>
+</body>
+</html>

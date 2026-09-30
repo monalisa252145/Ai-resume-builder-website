@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & About - ResumeAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <a href="dashboard.html" class="animated-logo-box">
+                    <span class="logo-text">ResumeAI</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html"><span class="icon">🏠</span> Dashboard</a>
+                <a href="builder.html"><span class="icon">✏️</span> Resume Builder</a>
+                <a href="templates.html"><span class="icon">🎨</span> Templates</a>
+                <a href="analyzer.html"><span class="icon">📊</span> ATS Analyzer</a>
+                <a href="profile.html"><span class="icon">👤</span> Profile</a>
+                <a href="help.html" class="active"><span class="icon">❓</span> Help</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn btn-danger btn-sm" style="width:100%;" onclick="logout()">🚪 Logout</button>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header class="topbar">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <span class="topbar-title">Help & About</span>
+            </header>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <h1>❓ Help & About</h1>
+                    <p>Everything you need to know about ResumeAI</p>
+                </div>
+
+                <div style="max-width: 800px;">
+                    <div class="card" style="margin-bottom: 20px;">
+                        <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">🚀 Getting Started</h2>
+                        <ol style="padding-left: 20px; line-height: 2; color: #334155;">
+                            <li>Register or Login to your account</li>
+                            <li>Go to <a href="builder.html" style="color: #4f46e5;">Resume Builder</a> and fill in your details</li>
+                            <li>Use AI buttons to generate professional content</li>
+                            <li>Choose a template from the right panel or <a href="templates.html" style="color: #4f46e5;">Templates page</a></li>
+                            <li>Preview your resume live on the right panel</li>
+                            <li>Use <a href="analyzer.html" style="color: #4f46e5;">ATS Analyzer</a> to check keyword match</li>
+                            <li>Click Download PDF to get your resume</li>
+                        </ol>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 20px;">
+                        <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">🤖 AI Features</h2>
+                        <ul style="line-height: 2; color: #334155;">
+                            <li>📝 <strong>Generate Summary</strong> – AI creates a professional summary based on your profile</li>
+                            <li>💼 <strong>Improve Experience</strong> – Converts simple job descriptions into bullet points</li>
+                            <li>🚀 <strong>Improve Project</strong> – Makes your project descriptions more impactful</li>
+                            <li>⚡ <strong>Suggest Skills</strong> – Recommends relevant skills for your job role</li>
+                            <li>📊 <strong>ATS Analysis</strong> – Analyzes keyword match between resume and job description</li>
+                        </ul>
+                        <div class="alert alert-info" style="margin-top: 12px;">
+                            💡 AI features require a valid API key configured in the backend. Without it, you'll see an error message and can continue editing manually.
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 20px;">
+                        <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">📋 10 Resume Templates</h2>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; color: #334155; font-size: 14px;">
+                            <div>1. Classic Professional</div>
+                            <div>2. Modern Minimal</div>
+                            <div>3. Corporate</div>
+                            <div>4. Elegant</div>
+                            <div>5. Tech Developer</div>
+                            <div>6. Creative</div>
+                            <div>7. Executive</div>
+                            <div>8. Student / Freshers</div>
+                            <div>9. ATS Simple</div>
+                            <div>10. Modern Two Column</div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 20px;">
+                        <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">🛠️ Technical Stack</h2>
+                        <ul style="line-height: 2; color: #334155; font-size: 14px;">
+                            <li><strong>Frontend:</strong> HTML5, CSS3, Vanilla JavaScript</li>
+                            <li><strong>Backend:</strong> Java 17, Spring Boot 3.2, Spring Security, JWT</li>
+                            <li><strong>Database:</strong> MongoDB with Spring Data MongoDB</li>
+                            <li><strong>PDF:</strong> Flying Saucer + iText PDF library</li>
+                            <li><strong>AI:</strong> Groq API (llama3-8b-8192 model)</li>
+                            <li><strong>Authentication:</strong> BCrypt + JWT tokens</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">📌 Tips</h2>
+                        <ul style="line-height: 2; color: #334155; font-size: 14px;">
+                            <li>Your resume auto-saves every 2 seconds while you type</li>
+                            <li>If you close the browser, your draft is saved in localStorage</li>
+                            <li>Use the ATS Simple template for maximum job board compatibility</li>
+                            <li>Add quantifiable achievements (e.g., "Reduced load time by 40%")</li>
+                            <li>Match your skills section to keywords in the job description</li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script>checkAuth();</script>
+</body>
+</html>

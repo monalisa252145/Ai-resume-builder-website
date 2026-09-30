@@ -1,0 +1,27 @@
+@media (max-width: 1200px) {
+    .container { padding: 0 16px; }
+}
+
+@media (max-width: 768px) {
+    .hero h1 { font-size: 32px; }
+    .hero p { font-size: 16px; }
+    .nav-links { display: none; }
+    .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: white; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 50; }
+    .nav-hamburger { display: block; }
+    .features-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .auth-card { padding: 32px 24px; }
+    .page-content { padding: 16px 12px; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .modal { padding: 24px 20px; }
+    .preview-paper { font-size: 9pt; padding: 12px; }
+}
+
+@media print {
+    .sidebar, .topbar, .builder-form-panel, .preview-controls { display: none !important; }
+    .builder-preview-panel { width: 100%; background: white; padding: 0; }
+    .preview-paper { box-shadow: none; width: 100%; }
+}

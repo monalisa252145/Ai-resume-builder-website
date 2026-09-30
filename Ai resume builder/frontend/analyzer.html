@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Analyzer - ResumeAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/analyzer.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Background Animated Decorations -->
+    <div class="dashboard-bg-decorations">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+        <div class="grid-mesh-overlay"></div>
+    </div>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <a href="dashboard.html" class="animated-logo-box">
+                    <span class="logo-text">ResumeAI</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html"><span class="icon">🏠</span> Dashboard</a>
+                <a href="builder.html"><span class="icon">✏️</span> Resume Builder</a>
+                <a href="templates.html"><span class="icon">🎨</span> Templates</a>
+                <a href="analyzer.html" class="active"><span class="icon">📊</span> ATS Analyzer</a>
+                <a href="profile.html"><span class="icon">👤</span> Profile</a>
+                <a href="help.html"><span class="icon">❓</span> Help</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn btn-danger btn-sm" style="width:100%;" onclick="logout()">🚪 Logout</button>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header class="topbar">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <span class="topbar-title">ATS Resume Analyzer</span>
+            </header>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <h1>📊 ATS Resume Analyzer</h1>
+                    <p>Check how well your resume matches a job description</p>
+                </div>
+
+                <div class="analyzer-layout">
+                    <div class="analyzer-form">
+                        <div class="alert alert-info">
+                            ⚠️ <strong>Note:</strong> This is an <em>Estimated ATS Compatibility Score</em> based on keyword matching. This is not an official score from any company.
+                        </div>
+                        <h2>📋 Enter Resume & Job Details</h2>
+                        <div class="form-group">
+                            <label>Select Resume (optional - or paste text below)</label>
+                            <select id="resumeSelect" onchange="loadResumeText()">
+                                <option value="">-- Select a saved resume --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Resume Text *</label>
+                            <textarea id="resumeText" rows="8" placeholder="Paste your resume content here, or select a resume above..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Job Description *</label>
+                            <textarea id="jobDescription" rows="8" placeholder="Paste the job description you're applying to..."></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="analyzeATS()" id="analyzeBtn">
+                            📊 Analyze ATS Compatibility
+                        </button>
+                    </div>
+
+                    <div class="analyzer-results" id="analyzerResults">
+                        <div class="score-section">
+                            <h2 style="margin-bottom: 20px;">Your Estimated ATS Score</h2>
+                            <div class="score-circle" id="scoreCircle">
+                                <span class="score-number" id="scoreNumber">0</span>
+                                <span class="score-label">/ 100</span>
+                            </div>
+                            <p id="scoreSummary" style="color: #64748b; font-size: 14px;"></p>
+                            <div class="score-disclaimer">
+                                ⚠️ This is an <strong>Estimated ATS Compatibility Score</strong>. Actual ATS scores vary by employer system.
+                            </div>
+                        </div>
+
+                        <div class="results-grid">
+                            <div class="results-card">
+                                <h3>✅ Matched Keywords</h3>
+                                <div id="matchedKeywords"></div>
+                            </div>
+                            <div class="results-card">
+                                <h3>❌ Missing Keywords</h3>
+                                <div id="missingKeywords"></div>
+                            </div>
+                        </div>
+
+                        <div class="results-grid">
+                            <div class="results-card">
+                                <h3>💪 Resume Strengths</h3>
+                                <ul class="result-list" id="strengthsList"></ul>
+                            </div>
+                            <div class="results-card">
+                                <h3>🔧 Suggested Improvements</h3>
+                                <ul class="result-list" id="improvementsList"></ul>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 20px;">
+                            <a href="builder.html" class="btn btn-primary">✏️ Improve My Resume</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/analyzer.js"></script>
+</body>
+</html>

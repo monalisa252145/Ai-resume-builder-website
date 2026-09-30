@@ -1,0 +1,443 @@
+/* =============================================================
+   DASHBOARD.CSS — Light Professional Theme
+   ResumeAI — Clean, Modern SaaS UI
+   ============================================================= */
+
+/* -- Layout --------------------------------------------------- */
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #F8FAFC;
+    overflow-x: hidden;
+}
+
+/* -- Remove old dark decorations (keep div harmless) ---------- */
+.dashboard-bg-decorations { display: none; }
+.ambient-orb,
+.grid-mesh-overlay { display: none; }
+
+/* =============================================================
+   SIDEBAR — Light, Clean, Minimal
+   ============================================================= */
+.sidebar {
+    width: 240px;
+    min-width: 240px;
+    background: #FFFFFF;
+    color: #374151;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+    border-right: 1px solid #E5E7EB;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease;
+}
+
+.sidebar-logo {
+    padding: 18px 20px;
+    border-bottom: 1px solid #F3F4F6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 12px 12px;
+    overflow-y: auto;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6B7280;
+    margin-bottom: 2px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.sidebar-nav a:hover {
+    background: #F3F4F6;
+    color: #111827;
+    transform: none;
+    box-shadow: none;
+}
+
+.sidebar-nav a.active {
+    background: #EEF2FF;
+    color: #4F46E5;
+    font-weight: 600;
+    border-color: #C7D2FE;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    border-color: transparent;
+}
+
+.sidebar-nav a.active {
+    border-color: #C7D2FE;
+}
+
+.sidebar-nav .icon {
+    font-size: 17px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.sidebar-footer {
+    padding: 14px 12px;
+    border-top: 1px solid #F3F4F6;
+}
+
+/* Logout button — light style */
+.sidebar-footer .btn-danger {
+    background: #FEF2F2;
+    color: #DC2626;
+    border: 1px solid #FECACA;
+}
+
+.sidebar-footer .btn-danger:hover {
+    background: #DC2626;
+    color: white;
+}
+
+/* =============================================================
+   MAIN CONTENT AREA
+   ============================================================= */
+.main-content {
+    margin-left: 240px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+/* =============================================================
+   TOP BAR / HEADER — Light, Professional
+   ============================================================= */
+.topbar {
+    background: #FFFFFF;
+    padding: 0 28px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #E5E7EB;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    flex-shrink: 0;
+}
+
+.topbar-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: 0.1px;
+}
+
+/* Menu toggle (mobile) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #374151;
+}
+
+.menu-toggle:hover {
+    background: #F3F4F6;
+}
+
+/* =============================================================
+   USER MENU / AVATAR
+   ============================================================= */
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, #4F46E5, #06B6D4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/* =============================================================
+   PAGE CONTENT
+   ============================================================= */
+.page-content {
+    padding: 28px;
+    flex: 1;
+    color: #111827;
+}
+
+.page-header {
+    margin-bottom: 28px;
+}
+
+.page-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    background: none;
+    -webkit-text-fill-color: unset;
+}
+
+.page-header p {
+    color: #6B7280;
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+/* =============================================================
+   STATS GRID / CARDS
+   ============================================================= */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #4F46E5, #06B6D4);
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border-color: #C7D2FE;
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.stat-icon.blue {
+    background: #EEF2FF;
+    border: 1px solid #C7D2FE;
+}
+
+.stat-icon.green {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+}
+
+.stat-icon.orange {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+}
+
+.stat-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: #111827;
+}
+
+.stat-label {
+    color: #6B7280;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+/* =============================================================
+   RESUME CARDS GRID
+   ============================================================= */
+.resumes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+}
+
+.resume-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.resume-card:hover {
+    border-color: #C7D2FE;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.1);
+}
+
+.resume-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
+}
+
+.resume-card-meta {
+    font-size: 12px;
+    color: #6B7280;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.resume-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.resume-card-actions .btn {
+    font-size: 12px;
+    padding: 6px 12px;
+}
+
+/* ATS Score Badges */
+.ats-score-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+.ats-score-badge.good   { background: #D1FAE5; color: #065F46; }
+.ats-score-badge.medium { background: #FEF3C7; color: #92400E; }
+.ats-score-badge.poor   { background: #FEE2E2; color: #991B1B; }
+
+/* =============================================================
+   EMPTY STATE
+   ============================================================= */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6B7280;
+}
+
+.empty-state .icon {
+    font-size: 52px;
+    margin-bottom: 14px;
+}
+
+.empty-state h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #111827;
+}
+
+.empty-state p {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* =============================================================
+   RESPONSIVE — Mobile / Tablet
+   ============================================================= */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 200;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .page-content {
+        padding: 18px 16px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .resumes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
